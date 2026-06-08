@@ -1,10 +1,10 @@
 """
-app.py — FeedbackIQ: Aspect-Based Customer Intelligence
+app.py - FeedbackIQ: Aspect-Based Customer Intelligence
 =========================================================
 Three analysis modes:
-  1. Single Review  — ABSA breakdown + interactive radar chart
-  2. Batch Text     — Multi-review summary + sentiment pie + aspect bar chart
-  3. CSV Upload     — Bulk file processing + downloadable Excel report
+  1. Single Review  - ABSA breakdown + interactive radar chart
+  2. Batch Text     - Multi-review summary + sentiment pie + aspect bar chart
+  3. CSV Upload     - Bulk file processing + downloadable Excel report
 
 Run locally:  python app.py  (or: gradio app.py)
 Deploy:       HuggingFace Spaces (set GROQ_API_KEY as a Repository secret)
@@ -83,7 +83,7 @@ def make_radar_chart(aspect_scores: dict) -> go.Figure | None:
 
 
 def make_sentiment_pie(results: list[dict]) -> go.Figure | None:
-    """Donut chart — sentiment distribution across a batch."""
+    """Donut chart - sentiment distribution across a batch."""
     counts: dict[str, int] = {}
     for r in results:
         if r.get("success"):
@@ -118,7 +118,7 @@ def make_sentiment_pie(results: list[dict]) -> go.Figure | None:
 
 def make_aspect_bar(results: list[dict]) -> go.Figure | None:
     """
-    Horizontal bar chart — average aspect score across the batch.
+    Horizontal bar chart - average aspect score across the batch.
     Only includes aspects mentioned in at least one review.
     """
     acc: dict[str, list[float]] = {a: [] for a in ASPECTS}
@@ -170,9 +170,9 @@ def make_aspect_bar(results: list[dict]) -> go.Figure | None:
 # ── Formatters ────────────────────────────────────────────────────────────────
 
 _PRIORITY_LABELS = {
-    "High":   "🔴 High — Immediate action needed",
-    "Medium": "🟡 Medium — Address this week",
-    "Low":    "🟢 Low — Monitor for trends",
+    "High":   "🔴 High - Immediate action needed",
+    "Medium": "🟡 Medium - Address this week",
+    "Low":    "🟢 Low - Monitor for trends",
 }
 _IMPACT_LABELS = {
     "High":   "🔴 High",
@@ -211,18 +211,18 @@ def format_single(result: dict) -> str:
     )
 
     return f"""### 📋 Summary
-{d.get('summary', '—')}
+{d.get('summary', '-')}
 
 ---
 
 | Field | Value |
 |:--|:--|
-| **Sentiment** | {d.get('sentiment', '—')} |
-| **Emotion** | {d.get('emotion', '—')} |
+| **Sentiment** | {d.get('sentiment', '-')} |
+| **Emotion** | {d.get('emotion', '-')} |
 | **Score** | `{_bar(score)}` |
-| **Confidence** | {d.get('confidence', '—')} |
-| **Priority** | {_PRIORITY_LABELS.get(d.get('priority'), d.get('priority', '—'))} |
-| **Business Impact** | {_IMPACT_LABELS.get(d.get('business_impact'), d.get('business_impact', '—'))} |
+| **Confidence** | {d.get('confidence', '-')} |
+| **Priority** | {_PRIORITY_LABELS.get(d.get('priority'), d.get('priority', '-'))} |
+| **Business Impact** | {_IMPACT_LABELS.get(d.get('business_impact'), d.get('business_impact', '-'))} |
 
 {aspect_section}
 ### ✅ Positive Aspects
@@ -233,7 +233,7 @@ def format_single(result: dict) -> str:
 
 ---
 ### 💡 Recommendation
-{d.get('actionable_recommendation', '—')}
+{d.get('actionable_recommendation', '-')}
 """
 
 
@@ -248,7 +248,7 @@ def format_batch(results: list[dict]) -> str:
         s = r["data"].get("sentiment", "Unknown")
         counts[s] = counts.get(s, 0) + 1
 
-    header = f"### 📊 Batch Summary — {total} Reviews Analysed\n\n"
+    header = f"### 📊 Batch Summary - {total} Reviews Analysed\n\n"
     header += "| " + " | ".join(counts.keys()) + " |\n"
     header += "|" + "---|" * len(counts) + "\n"
     header += "| " + " | ".join(str(v) for v in counts.values()) + " |\n\n---\n"
@@ -256,7 +256,7 @@ def format_batch(results: list[dict]) -> str:
     body = ""
     for r in results:
         preview = r["original_text"][:90] + ("…" if len(r["original_text"]) > 90 else "")
-        body += f"\n**#{r['index']}** — {preview}\n"
+        body += f"\n**#{r['index']}** - {preview}\n"
         body += format_single(r) + "\n---\n"
 
     return header + body
@@ -367,7 +367,7 @@ footer { display:none!important; }
 with gr.Blocks(
     theme=gr.themes.Soft(primary_hue="indigo"),
     css=CSS,
-    title="FeedbackIQ — Aspect-Based Customer Intelligence",
+    title="FeedbackIQ - Aspect-Based Customer Intelligence",
 ) as demo:
 
     # ── Header ────────────────────────────────────────────────────────────────
@@ -375,7 +375,7 @@ with gr.Blocks(
 # 🔍 FeedbackIQ
 ### Aspect-Based Customer Intelligence
 *Unlike standard sentiment analyzers, FeedbackIQ decomposes each review into
-**5 business-critical dimensions** — giving you actionable intelligence, not just a score.*
+**5 business-critical dimensions** - giving you actionable intelligence, not just a score.*
 
 Built by [**Muhammad Zeeshan**](https://dev-zeeshan-portfolio.vercel.app) &nbsp;·&nbsp;
 [GitHub](https://github.com/dev-mzeeshan/feedbackiq) &nbsp;·&nbsp;
@@ -386,7 +386,7 @@ Built by [**Muhammad Zeeshan**](https://dev-zeeshan-portfolio.vercel.app) &nbsp;
     with gr.Tab("🔎 Single Review"):
         gr.Markdown(
             "<p style='color:#64748b;font-size:13px;margin:0 0 12px'>"
-            "Analyse one review. See per-aspect scores on the radar chart — "
+            "Analyse one review. See per-aspect scores on the radar chart - "
             "not just overall sentiment.</p>"
         )
 

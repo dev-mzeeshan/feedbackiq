@@ -1,5 +1,5 @@
 """
-analyzer.py — FeedbackIQ Core Analysis Engine
+analyzer.py - FeedbackIQ Core Analysis Engine
 ================================================
 What makes this different from a standard sentiment analyzer:
 
@@ -8,11 +8,11 @@ What makes this different from a standard sentiment analyzer:
   Standard tools return one score: "Positive" or "Negative."
   FeedbackIQ decomposes each review into 5 business-critical dimensions:
 
-    • Product Quality    — Is the core offering meeting expectations?
-    • Customer Service   — How is human/support interaction perceived?
-    • Delivery           — Speed, packaging, logistics experience
-    • Value for Money    — Price-to-quality perception
-    • User Experience    — Ease of use, interface, process clarity
+    • Product Quality    - Is the core offering meeting expectations?
+    • Customer Service   - How is human/support interaction perceived?
+    • Delivery           - Speed, packaging, logistics experience
+    • Value for Money    - Price-to-quality perception
+    • User Experience    - Ease of use, interface, process clarity
 
   This is a real NLP research area (Pontiki et al., 2014 SemEval ABSA task).
   Knowing *where* sentiment is negative is infinitely more actionable than
@@ -160,8 +160,8 @@ def analyze_batch(feedbacks_text: str) -> list[dict]:
     Analyse multiple reviews (one per line).
 
     Returns a list of result dicts, each with:
-        result["original_text"]  — the original review string
-        result["index"]          — 1-based index
+        result["original_text"]  - the original review string
+        result["index"]          - 1-based index
         ...standard analyze_feedback fields...
     """
     lines = [l.strip() for l in feedbacks_text.splitlines() if len(l.strip()) > 5]
